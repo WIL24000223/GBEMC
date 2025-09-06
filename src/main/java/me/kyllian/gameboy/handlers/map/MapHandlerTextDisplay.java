@@ -32,16 +32,27 @@ public class MapHandlerTextDisplay implements MapHandler {
     private static final int SCREEN_WIDTH = 128;
     private static final int SCREEN_HEIGHT = 128;
     
-    // Display spacing - adjusted for better visibility
-    private static final double ROW_HEIGHT = 0.08; // Height between each text display
-    private static final double DISPLAY_SCALE = 0.5; // Scale of text displays
-    private static final double DISPLAY_OFFSET_Y = 1.5; // Height offset from player
-    private static final double DISPLAY_OFFSET_Z = 3.0; // Distance in front of player
+    // Display spacing - configurable values
+    private final double ROW_HEIGHT;
+    private final double DISPLAY_SCALE; 
+    private final double DISPLAY_OFFSET_Y;
+    private final double DISPLAY_OFFSET_Z;
+    private final int SAMPLING_RATE;
 
     public MapHandlerTextDisplay(GameboyPlugin plugin) {
         this.plugin = plugin;
         this.playerDisplays = new HashMap<>();
         this.playerTasks = new HashMap<>();
+        
+        // Load configuration values with defaults
+        this.DISPLAY_OFFSET_Z = plugin.getConfig().getDouble("text_display.offset_z", 3.0);
+        this.DISPLAY_OFFSET_Y = plugin.getConfig().getDouble("text_display.offset_y", 1.5);
+        this.ROW_HEIGHT = plugin.getConfig().getDouble("text_display.row_height", 0.08);
+        this.DISPLAY_SCALE = plugin.getConfig().getDouble("text_display.scale", 0.5);
+        this.SAMPLING_RATE = plugin.getConfig().getInt("text_display.sampling_rate", 4);
+        
+        plugin.getLogger().info("Text Display mode enabled with settings: offset_z=" + DISPLAY_OFFSET_Z + 
+                               ", offset_y=" + DISPLAY_OFFSET_Y + ", sampling_rate=" + SAMPLING_RATE);
     }
 
     @Override
@@ -140,9 +151,8 @@ public class MapHandlerTextDisplay implements MapHandler {
             StringBuilder rowText = new StringBuilder();
             
             // Convert each pixel in the row to a character
-            // We'll sample every few pixels to make it more readable
-            int samplingRate = 4; // Sample every 4th pixel to reduce text width
-            for (int col = 0; col < SCREEN_WIDTH; col += samplingRate) {
+            // Use configurable sampling rate to make it more readable
+            for (int col = 0; col < SCREEN_WIDTH; col += SAMPLING_RATE) {
                 int pixelIndex = col + (row * SCREEN_WIDTH);
                 if (pixelIndex < pixels.length) {
                     // Convert pixel value to character

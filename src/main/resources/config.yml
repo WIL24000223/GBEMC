@@ -10,3 +10,16 @@ tick_update_delay: 1
 
 # Display mode: "map" for traditional map display, "text" for text display entities
 display_mode: text
+
+# Text display specific settings (only used when display_mode is "text")
+text_display:
+  # Distance in front of player to position the screen
+  offset_z: 3.0
+  # Height offset from player position  
+  offset_y: 1.5
+  # Spacing between each row of text displays
+  row_height: 0.08
+  # Scale of the text displays
+  scale: 0.5
+  # Pixel sampling rate (1 = every pixel, 4 = every 4th pixel)
+  sampling_rate: 4
