@@ -66,7 +66,7 @@ public class GameboyPlugin extends JavaPlugin {
         new PlayerInteractEntityListener(this);
         new PlayerInteractListener(this);
         new PlayerItemHeldListener(this);
-        if (!protocolLib) new PlayerMoveListener(this);
+        if (!protocolLib) new PlayerInputListener(this);
         new PlayerQuitListener(this);
         new PlayerSwapHandItemsListener(this);
 
