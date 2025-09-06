@@ -2,7 +2,7 @@ name: Gameboy
 main: me.kyllian.gameboy.GameboyPlugin
 author: Kyllian
 version: ${project.version}
-api-version: 1.13
+api-version: 1.19
 softdepend:
   - ProtocolLib
 

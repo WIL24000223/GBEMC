@@ -7,3 +7,6 @@ gameboys: 100
 button_debounce: 150
 
 tick_update_delay: 1
+
+# Display mode: "map" for traditional map display, "text" for text display entities
+display_mode: text
