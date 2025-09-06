@@ -23,5 +23,10 @@ public class PlayerQuitListener implements Listener {
         Pocket pocket = plugin.getPlayerHandler().getPocket(player);
         if (!pocket.isEmpty()) pocket.stopEmulator(player);
         plugin.getPlayerHandler().removePocket(player);
+        
+        // Cleanup text displays if using text display handler
+        if (plugin.getMapHandler() instanceof me.kyllian.gameboy.handlers.map.MapHandlerTextDisplay) {
+            ((me.kyllian.gameboy.handlers.map.MapHandlerTextDisplay) plugin.getMapHandler()).cleanupPlayer(player);
+        }
     }
 }

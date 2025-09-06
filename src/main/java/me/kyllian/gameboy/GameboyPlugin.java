@@ -78,6 +78,11 @@ public class GameboyPlugin extends JavaPlugin {
             Pocket pocket = playerHandler.getPocket(player);
             if (!pocket.isEmpty()) pocket.stopEmulator(player);
         });
+        
+        // Cleanup text displays if using text display handler
+        if (mapHandler instanceof me.kyllian.gameboy.handlers.map.MapHandlerTextDisplay) {
+            ((me.kyllian.gameboy.handlers.map.MapHandlerTextDisplay) mapHandler).cleanupAllPlayers();
+        }
     }
 
     public MapHandler getMapHandler() {
