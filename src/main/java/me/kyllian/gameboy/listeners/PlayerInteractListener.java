@@ -1,8 +1,6 @@
 package me.kyllian.gameboy.listeners;
 
 import me.kyllian.gameboy.GameboyPlugin;
-import me.kyllian.gameboy.data.Button;
-import me.kyllian.gameboy.data.Pocket;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,10 +20,11 @@ public class PlayerInteractListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        Pocket pocket = plugin.getPlayerHandler().getPocket(player);
-        if (pocket.isEmpty()) return;
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
-            pocket.getButtonToggleHelper().press(Button.BUTTONB, true);
+        if (!plugin.getInputHandler().hasActiveGameboy(player)) return;
+        
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            plugin.getInputHandler().handleBButton(player, true);
+        }
         event.setCancelled(true);
     }
 }

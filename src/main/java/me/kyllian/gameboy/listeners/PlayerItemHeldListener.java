@@ -1,12 +1,10 @@
 package me.kyllian.gameboy.listeners;
 
 import me.kyllian.gameboy.GameboyPlugin;
-import me.kyllian.gameboy.data.Pocket;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
 public class PlayerItemHeldListener implements Listener {
@@ -21,7 +19,8 @@ public class PlayerItemHeldListener implements Listener {
     @EventHandler
     public void onPlayerItemHeld(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
-        Pocket pocket = plugin.getPlayerHandler().getPocket(player);
-        if (!pocket.isEmpty()) event.setCancelled(true);
+        if (plugin.getInputHandler().hasActiveGameboy(player)) {
+            event.setCancelled(true);
+        }
     }
 }

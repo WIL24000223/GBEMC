@@ -1,8 +1,6 @@
 package me.kyllian.gameboy.listeners;
 
 import me.kyllian.gameboy.GameboyPlugin;
-import me.kyllian.gameboy.data.Button;
-import me.kyllian.gameboy.data.Pocket;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,9 +19,8 @@ public class PlayerDropItemListener implements Listener {
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
-        Pocket pocket = plugin.getPlayerHandler().getPocket(player);
-        if (!pocket.isEmpty())  {
-            pocket.getButtonToggleHelper().press(Button.BUTTONSELECT, true);
+        if (plugin.getInputHandler().hasActiveGameboy(player)) {
+            plugin.getInputHandler().handleSelectButton(player, true);
             event.setCancelled(true);
         }
     }

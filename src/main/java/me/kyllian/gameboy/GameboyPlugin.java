@@ -2,6 +2,7 @@ package me.kyllian.gameboy;
 
 import me.kyllian.gameboy.commands.GameboyExecutor;
 import me.kyllian.gameboy.data.Pocket;
+import me.kyllian.gameboy.handlers.InputHandler;
 import me.kyllian.gameboy.handlers.MessageHandler;
 import me.kyllian.gameboy.handlers.PlayerHandler;
 import me.kyllian.gameboy.handlers.RomHandler;
@@ -28,6 +29,7 @@ public class GameboyPlugin extends JavaPlugin {
     private MessageHandler messageHandler;
     private PlayerHandler playerHandler;
     private RomHandler romHandler;
+    private InputHandler inputHandler;
 
     @Override
     public void onEnable() {
@@ -42,6 +44,7 @@ public class GameboyPlugin extends JavaPlugin {
         messageHandler = new MessageHandler(this);
         playerHandler = new PlayerHandler(this);
         romHandler = new RomHandler(this);
+        inputHandler = new InputHandler(this);
 
         Metrics metrics = new Metrics(this, 9592);
         metrics.addCustomChart(new SingleLineChart("games_emulated", () ->
@@ -102,5 +105,9 @@ public class GameboyPlugin extends JavaPlugin {
 
     public boolean isProtocolLib() {
         return protocolLib;
+    }
+
+    public InputHandler getInputHandler() {
+        return inputHandler;
     }
 }
